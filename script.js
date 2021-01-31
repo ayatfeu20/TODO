@@ -1,182 +1,110 @@
-// Setting Up Variables
-let theInput = document.querySelector(".add-task input");
-let theAddButton = document.querySelector(".add-task .plus");
-let tasksContainer = document.querySelector(".tasks-content");
-let tasksCount = document.querySelector(".tasks-count span");
-let tasksCompleted = document.querySelector(".tasks-completed span");
+const form = document.querySelector('#todoForm');
+const input = document.querySelector('#todoInput');
+const output = document.querySelector('#output');
+const errorMsg = document.querySelector(".errorMsg")
 
-/*// Focus On Input Field
-window.onload = function () {
-  theInput.focus();
-};
 
-// Adding The Task
-theAddButton.onclick = function () {*/
+let todos = []
 
- // fetch json
- 
- let tasks = [];
+const fetchTodos = async () => {
+  let url = 'https://jsonplaceholder.typicode.com/todos';
 
-const fetchTasks = () => {
-  fetch('https://jsonplaceholder.typicode.com/todos')
-  .then(res => res.json())
-  .then(data => {
-    tasks = data;
-    console.log(tasks);
-    listTasks();
-  })
+  const res = await fetch(url);
+  const _todos = await res.json();
+
+  todos = _todos;
+  
+
+  listTodos(todos);
 }
 fetchTodos();
 
-  // If Input is Empty
-  if (theInput.value === '') {
+const listTodos = (todos) => {
+  output.innerHTML = '';
 
-    console.log("No Value");
-} else {
+  todos.forEach(todo => {
 
-    let noTasksMsg = document.querySelector(".no-tasks-message");
+    output.innerHTML += newTodo(todo);
+  })
+}
 
-    // Check If Span With No Tasks Message Is Exist
-    if (document.body.contains(document.querySelector(".no-tasks-message"))) {
+const newTodo = todo => {
 
-      // Remove No Tasks Message
-      noTasksMsg.remove();
+  let template = todo.completed ? `
+  <div id="${todo.id}" class="todo completed ">
+    <h5 class="title">${todo.title}</h5>
+    <button class="btn btn-danger ">delete</button>
+  </div>
+  `
+  : `
+  <div id="${todo.id}" class="todo">
+    <h5 class="title">${todo.title}</h5>
+    <button class="btn btn-danger ">delete</button>
+  </div>
+  `
+  return template
+}
 
-    }
+const createTodo = async title => {
+  let url = 'https://jsonplaceholder.typicode.com/todos';
 
-    // Create Main Span Element
-    let mainSpan = document.createElement("span");
+  const _todo = {
+    title,
+    completed: false
+  }
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+    body: JSON.stringify(_todo)
+  })
+
+  const todo = await res.json()
+
+  console.log(todo);
+  todo.id = Date.now();
+
+  todos.unshift(todo)
+  listTodos(todos);
+}
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+
+  createTodo(input.value);
+  input.value = '';
+})
+
+output.addEventListener('click', e => {
+
+  // console.log(e.target.classList.contains('title'))
+
+  if(e.target.classList.contains('btn-danger'))
+    deleteTodo(e.target.parentNode.id)
+
+})
+
+const deleteTodo = id => {
+  todos = todos.filter(todo => todo.id != id);
+  listTodos(todos);
+}
+
+
+
+output.addEventListener('click', ev => {
+
     
-    // Create Delete Button
-    let deleteElement = document.createElement("span");
-    // Create The Main Span Text
-    let text = document.createTextNode(theInput.value);
-
-    // Create The Delete Button Text
-    let deleteText = document.createTextNode("Delete");
-
-    // Add Text To Main Span
-    mainSpan.appendChild(text);
-
-    // Add Class To Main Span
-    mainSpan.className = 'task-box';
-
-    // Add Text To Delete Button
-    deleteElement.appendChild(deleteText);
-
-    // Add Class To Delete Button
-    deleteElement.className = 'delete';
-
-    // Add Delete Button To Main Span
-    mainSpan.appendChild(deleteElement);
-    // Add The Task To The Container
-    tasksContainer.appendChild(mainSpan);
-
-    // Empty The Input
-    theInput.value = '';
-
-    // Tasks contains
-
-    const listTasks = () => {
-        tasksContainer.innerHTML = '';
-        tasks.forEach(task() => {
-              
-          newTask(task);
-        })
-      }
-      
-      
-      const createTask = (title) => {
-      
-        fetch('https://jsonplaceholder.typicode.com/todos',{
-          method: 'POST',
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8'
-          },
-          body: JSON.stringify({
-            title,
-            completed: false
-          })
-        })
-        .then(res => res.json())
-        .then(data => {
-          console.log(data)
-          tasks.unshift(data);
-          listTasks();
-        })
-      
-      }
-      
-      
-
-
-
-
-   /* // Focus On Field
-    theInput.focus();*/
-
-    // Calculate Tasks
-    calculateTasks();
-
+  
+    if(ev.target.classList.contains('completed'))
+     toggleTodo(e.target.parentNode.id)
+  
+  })
+  
+  const completedTodo = id => {
+    todos = todos.filter(todo => todo.completed != completed);
+    listTodos(todos);
   }
+  
 
-};
-
-document.addEventListener('click', function (e) {
-    // Delete Task
-  if (e.target.className == 'delete') {
-
-    // Remove Current Task
-    e.target.parentNode.remove();
-
-    // Check Number Of Tasks Inside The Container
-    if (tasksContainer.childElementCount == 0) {
-
-      createNoTasks();
-
-    }
-
-  }
-
-  // Finish Task
-  if (e.target.classList.contains('task-box')) {
-
-    // Toggle Class 'finished'
-    e.target.classList.toggle("finished");
-
-  }
-
-  // Calculate Tasks
-  calculateTasks();
-
-});
-
-// Function To Create No Tasks Message
-function createNoTasks() {
-
-  // Create Message Span Element
-  let msgSpan = document.createElement("span");
-
-  // Create The Text Message
-  let msgText = document.createTextNode("No Tasks To Show");
-
-  // Add Text To Message Span Element
-  msgSpan.appendChild(msgText);
-
-  // Add Class To Message Span
-  msgSpan.className = 'no-tasks-message';
-
-  // Append The Message Span Element To The Task Container
-  tasksContainer.appendChild(msgSpan);
-
-}
-
-// Function To Calculate Tasks
-function calculateTasks() {
-
-  // Calculate All Tasks
-  tasksCount.innerHTML = document.querySelectorAll('.tasks-content .task-box').length;
-
-  // Calculate Completed Tasks
-  tasksCompleted.innerHTML = document.querySelectorAll('.tasks-content .finished').length;
-}
