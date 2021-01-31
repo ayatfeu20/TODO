@@ -1,9 +1,10 @@
+//setting us available
 const form = document.querySelector('#todoForm');
 const input = document.querySelector('#todoInput');
 const output = document.querySelector('#output');
 const errorMsg = document.querySelector(".errorMsg")
 
-
+// bring data (tasks) from Json ul with use fetch
 let todos = []
 
 const fetchTodos = async () => {
@@ -27,6 +28,9 @@ const listTodos = (todos) => {
     output.innerHTML += newTodo(todo);
   })
 }
+
+
+
 
 const newTodo = todo => {
 
@@ -77,11 +81,10 @@ form.addEventListener('submit', e => {
   input.value = '';
 })
 
+//delete tasks
 output.addEventListener('click', e => {
 
-  // console.log(e.target.classList.contains('title'))
-
-  if(e.target.classList.contains('btn-danger'))
+    if(e.target.classList.contains('btn-danger'))
     deleteTodo(e.target.parentNode.id)
 
 })
@@ -107,4 +110,3 @@ output.addEventListener('click', ev => {
     listTodos(todos);
   }
   
-

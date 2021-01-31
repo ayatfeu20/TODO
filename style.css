@@ -42,23 +42,23 @@
     position: relative;
   }
   #todoInput {
-    display: inline-block;
+    display: inline;
     padding: 10px 15px;
     border: none;
     background-color: rgba(255, 255, 255, .3);
     width: calc(100% - 15px);
     color: #FFF;
     font-size: 20px;
+    
+    
   }
-  .todo-container  input:focus {
-    outline: none;
-  }
-
+  
 
   #output{
   cursor: pointer;
+  justify-content: center;
+  text-align: left;
   position: relative;
-  /*padding: 12px 8px 12px 40px;*/
   padding: 12px;
   background: #eee;
   transition: 0.2s;
@@ -105,8 +105,8 @@
   .btn{
 
     position: relative;
-    left: 30rem;
-    bottom: 5px;
+    left: 33rem;
+    bottom: 2px;
     
     padding: 1px;
   }
