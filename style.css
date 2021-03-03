@@ -52,6 +52,12 @@
     
     
   }
+
+  #errorMsg{
+    color: crimson;
+    font-size: smaller;
+    padding-bottom: 1rem;
+  }
   
 
   #output{
@@ -66,6 +72,7 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  font-size: small;
 
   }
   

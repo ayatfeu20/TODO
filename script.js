@@ -2,7 +2,9 @@
 const form = document.querySelector('#todoForm');
 const input = document.querySelector('#todoInput');
 const output = document.querySelector('#output');
-const errorMsg = document.querySelector(".errorMsg")
+const errorMsgs = document.querySelector("#errorMsg")
+
+
 
 // bring data (tasks) from Json ul with use fetch
 let todos = []
@@ -77,8 +79,16 @@ const createTodo = async title => {
 form.addEventListener('submit', e => {
   e.preventDefault();
 
+  if (input.value === '') {
+  console.log = ('No value')
+  errorMsgs.innerHTML =   " You must write somthing";
+  }
+  else {
+
   createTodo(input.value);
   input.value = '';
+  errorMsgs.remove()
+  }
 })
 
 //delete tasks
