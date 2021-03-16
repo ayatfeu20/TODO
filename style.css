@@ -75,6 +75,9 @@
   font-size: small;
 
   }
+
+
+
   
  .todo:nth-child(odd) {
     background: #f9f9f9;
@@ -94,7 +97,7 @@
   }
   
   
-  .todo.checked::before {
+  .todo .checked::before {
     content: '';
     position: absolute;
     border-color: #fff;

@@ -75,6 +75,7 @@ const createTodo = async title => {
   todos.unshift(todo)
   listTodos(todos);
 }
+// error message
 
 form.addEventListener('submit', e => {
   e.preventDefault();
@@ -91,7 +92,15 @@ form.addEventListener('submit', e => {
   }
 })
 
-//delete tasks
+// Add a "checked" symbol when clicking on a list item
+
+todos.addEventListener('click', function(e) {
+  if (e.target.tagName === 'todo') {
+    e.target.classList.toggle('checked');
+  }
+}, false);
+
+//delete task
 output.addEventListener('click', e => {
 
     if(e.target.classList.contains('btn-danger'))
@@ -105,18 +114,13 @@ const deleteTodo = id => {
 }
 
 
-
-output.addEventListener('click', ev => {
-
-    
+/*output.addEventListener('click', ev => {
+  
   
     if(ev.target.classList.contains('completed'))
      toggleTodo(e.target.parentNode.id)
   
-  })
+  })*/
   
-  const completedTodo = id => {
-    todos = todos.filter(todo => todo.completed != completed);
-    listTodos(todos);
-  }
+  
   
