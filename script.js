@@ -6,7 +6,7 @@ const errorMsgs = document.querySelector("#errorMsg")
 
 
 
-// bring data (tasks) from Json ul with use fetch
+// bring data (tasks) from Json url with use fetch
 let todos = []
 
 const fetchTodos = async () => {
@@ -94,11 +94,12 @@ form.addEventListener('submit', e => {
 
 // Add a "checked" symbol when clicking on a list item
 
-todos.addEventListener('click', function(e) {
+output.addEventListener('click', function(e) {
   if (e.target.tagName === 'todo') {
-    e.target.classList.toggle('checked');
+    e.target.classList.toggle('checked')
+    todo.style.textDecoration = "line-through";
   }
-}, false);
+}, );
 
 //delete task
 output.addEventListener('click', e => {

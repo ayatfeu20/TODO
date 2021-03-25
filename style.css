@@ -89,7 +89,7 @@
   }
   
   
-  .todo .checked {
+  #output .checked {
     background: #888;
     color: #fff;
     text-decoration: line-through;
@@ -97,7 +97,7 @@
   }
   
   
-  .todo .checked::before {
+  #output .checked::before {
     content: '';
     position: absolute;
     border-color: #fff;
@@ -121,24 +121,6 @@
     padding: 1px;
   }
   
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   @media screen and (max-width: 600px) {
