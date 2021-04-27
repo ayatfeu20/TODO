@@ -1,4 +1,4 @@
-//setting us available
+//setting up available
 const form = document.querySelector('#todoForm');
 const input = document.querySelector('#todoInput');
 const output = document.querySelector('#output');
@@ -48,6 +48,7 @@ const newTodo = todo => {
     <button class="btn btn-danger ">delete</button>
   </div>
   `
+  
   return template
 }
 
@@ -92,14 +93,17 @@ form.addEventListener('submit', e => {
   }
 })
 
-// Add a "checked" symbol when clicking on a list item
+
+
+/*// Add a "checked" symbol when clicking on a list item
+
 
 output.addEventListener('click', function(e) {
   if (e.target.tagName === 'todo') {
     e.target.classList.toggle('checked')
     todo.style.textDecoration = "line-through";
   }
-}, );
+}, );*/
 
 //delete task
 output.addEventListener('click', e => {
@@ -115,13 +119,10 @@ const deleteTodo = id => {
 }
 
 
-/*output.addEventListener('click', ev => {
+output.addEventListener('click', e => {
   
+     e.target.classList.toggle("complete");
   
-    if(ev.target.classList.contains('completed'))
-     toggleTodo(e.target.parentNode.id)
-  
-  })*/
-  
+  })
   
   
